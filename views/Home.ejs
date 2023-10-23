@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <style>
+        .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+        }
+  
+        @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+          }
+        }
+  
+        .b-example-divider {
+          height: 3rem;
+          background-color: rgba(0, 0, 0, .1);
+          border: solid rgba(0, 0, 0, .15);
+          border-width: 1px 0;
+          box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+  
+        .b-example-vr {
+          flex-shrink: 0;
+          width: 1.5rem;
+          height: 100vh;
+        }
+  
+        .bi {
+          vertical-align: -.125em;
+          fill: currentColor;
+        }
+  
+        .nav-scroller {
+          position: relative;
+          z-index: 2;
+          height: 2.75rem;
+          overflow-y: hidden;
+        }
+  
+        .nav-scroller .nav {
+          display: flex;
+          flex-wrap: nowrap;
+          padding-bottom: 1rem;
+          margin-top: -1px;
+          overflow-x: auto;
+          text-align: center;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        
+      </style>
+</head>
+
+<body>
+      <main>
+    <header class="p-3 " style="background-color: rgb(15, 15, 15)">
+        <div class="container" >
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+            </a>
+    
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <% if(user !== undefined){ %>
+                <li><a href="/home/home?username=<%=user%>" class="nav-link px-1 text-white" style="font-size: 1.5rem;">OBC&nbsp&nbsp&nbsp</a></li>  
+                <li><a href="/home/home?username=<%=user%>" class="nav-link px-2 text-white">Home</a></li>
+                <li><a href="/movies/movies?username=<%=user%>" class="nav-link px-2 text-white">Movies</a></li>
+              <% } else { %>
+                <li><a href="/home/home" class="nav-link px-1 text-white" style="font-size: 1.5rem;">OBC&nbsp&nbsp&nbsp</a></li>  
+                <li><a href="/home/home" class="nav-link px-2 text-white">Home</a></li>
+                <li><a href="/movies/movies" class="nav-link px-2 text-white">Movies</a></li>
+              <% } %>
+              
+              <li><a class="nav-link px-2 text-white">Ways To Watch</a></li>
+            </ul>
+    
+            <form action="/movies/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+              <input type="hidden" id="username" name="username" value="<%=user%>">
+              <input type="search" name="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+            </form>
+    
+            
+            <div class="text-end">
+      
+                <% if(user !== undefined){ %>
+                  <span style="color: white;">Welcome <%= user %></span>
+                <% } else { %>
+                  <form action="/login/login" style="display: inline;">
+                    <button type="submit" class="btn btn-outline-light me-2">Login</button> 
+                  </form>
+                  <form action="/signUp/signUp" style="display: inline;">
+                     <button type="submit" class="btn btn-warning" >Sign-up</button>
+                  </form>
+                <% } %>
+                
+                
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <header class="p-3 " style=" background-color: rgb(47, 47, 47);">
+      <div class="container">
+      <form action="/movies/find">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <svg class="bi me-2" width="250" height="50" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+          </a>
+  
+          <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <div>
+                <select onchange="cinemasChanged()" class="form-select" name="cinema" id="cinemas" required>
+                  <option value="">Select cinema...</option>
+                  <% for (var i=0; i < cinemas.length; i++) { %>
+                    <option value="<%=cinemas[i].name%>"><%=cinemas[i].name%></option>
+                  <% } %>
+                </select>
+              </div>
+              <div>
+                <select onchange="moviesChanged()" class="form-select" name="movie" id="movies" required>
+                  <option value="">Select movie....</option>
+                  <% for (var i=0; i < movies.length; i++) { %>
+                    <option value="<%=movies[i].name%>"><%=movies[i].name%></option>
+                  <% } %>
+                </select>
+              </div>
+              <input type="hidden" id="username" name="username" value="<%=user%>">
+              <button type="submit" class="btn btn-warning2" >Find times and book</button>   
+            <!-- <a href="" type="button" class="btn btn-warning" style=" background-color: rgb(255, 163, 163); border-width: 0px 0; ">Find times and book </a> -->
+            </div>
+        </div>
+      </form>
+      </div>
+    </header>
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+          <% for (var i=0; i < movies.length && i < 4; i++) { %>
+            <% if (i === 0) { %>
+              <div class="carousel-item active">
+                <a href="/movies/movie?username=<%=user%>&movie=<%=movies[i].name%>"><img src="https://image.tmdb.org/t/p/original<%=movies[i].posterPath%>" class="d-block w-100" alt=""></a>
+              </div>
+            <% } else { %>
+              <div class="carousel-item">
+                <a href="/movies/movie?username=<%=user%>&movie=<%=movies[i].name%>"><img src="https://image.tmdb.org/t/p/original<%=movies[i].posterPath%>" class="d-block w-100" alt=""></a>
+              </div>
+            <% } %>
+          <% } %>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      </main>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</body>
+
+</html>

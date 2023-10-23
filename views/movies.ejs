@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Movies</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <style>
+        .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+        }
+  
+        @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+          }
+        }
+  
+        .b-example-divider {
+          height: 3rem;
+          background-color: rgba(0, 0, 0, .1);
+          border: solid rgba(0, 0, 0, .15);
+          border-width: 1px 0;
+          box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+  
+        .b-example-vr {
+          flex-shrink: 0;
+          width: 1.5rem;
+          height: 100vh;
+        }
+  
+        .bi {
+          vertical-align: -.125em;
+          fill: currentColor;
+        }
+  
+        .nav-scroller {
+          position: relative;
+          z-index: 2;
+          height: 2.75rem;
+          overflow-y: hidden;
+        }
+  
+        .nav-scroller .nav {
+          display: flex;
+          flex-wrap: nowrap;
+          padding-bottom: 1rem;
+          margin-top: -1px;
+          overflow-x: auto;
+          text-align: center;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch;
+        }
+      </style>
+
+        <link href="/css/movies.css" rel="stylesheet">
+</head>
+
+<body>
+      <main>
+        <header class="p-3 " style="background-color: rgb(15, 15, 15)">
+            <div class="container" >
+              <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                  <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+                </a>
+        
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                  <% if(user !== undefined){ %>
+                    <li><a href="/home/home?username=<%=user%>" class="nav-link px-1 text-white" style="font-size: 1.5rem;">OBC&nbsp&nbsp&nbsp</a></li>  
+                    <li><a href="/home/home?username=<%=user%>" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="/movies/movies?username=<%=user%>" class="nav-link px-2 text-white">Movies</a></li>
+                  <% } else { %>
+                    <li><a href="/home/home" class="nav-link px-1 text-white" style="font-size: 1.5rem;">OBC&nbsp&nbsp&nbsp</a></li>  
+                    <li><a href="/home/home" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="/movies/movies" class="nav-link px-2 text-white">Movies</a></li>
+                  <% } %>
+                  <li><a class="nav-link px-2 text-white">Ways To Watch</a></li>
+                </ul>
+        
+                <form action="/movies/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                  <input type="hidden" id="username" name="username" value="<%=user%>">
+                  <input type="search" name="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+                </form>
+        
+                <div class="text-end">
+                  <% if(user!== undefined){ %>
+                    <span style="color: white;">Welcome <%= user %></span>
+                  <% } else { %>
+                    <form action="/login/login" style="display: inline;">
+                      <button type="submit" class="btn btn-outline-light me-2">Login</button> 
+                    </form>
+                    <form action="/signUp/signUp" style="display: inline;">
+                      <button type="submit" class="btn btn-warning" >Sign-up</button>
+                    </form>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </header>
+      </main>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+    <!-- <h1>Movies</h1> -->
+    <!-- <a class="btn btn-primary" href="/api/addcountry" >Add country</a> -->
+    <!-- <table class="table table-dark table-bordered" border="1" style="width: 100%">
+        <thead class="text-success">
+            <th class="text-danger">ID</th>
+            <th>Movie Name</th>
+            <th>Genre</th>
+            <th>Time</th>
+        </thead>
+        <tbody>
+            <% for (var i=0; i < movies.length; i++) { %>
+                <tr>
+                    <td>
+                        <%= movies[i].movie_id %>
+                    </td>
+                    <td>
+                        <%= movies[i].movie_name %>
+                    </td>
+                    <td>
+                        <%= movies[i].movie_genre %>
+                    </td>
+                    <td>
+                        <%= movies[i].movie_time %>
+                    </td>
+                </tr>
+                <% } %>
+        </tbody>
+    </table> -->
+
+    <!-- <% for (var i=0; i < movies.length; i++) { %>
+        <h1><%= movies[i].movie_name %></h1>
+        <% } %> -->
+
+        
+          
+          <main>
+          
+            <section class="py-2 text-center container">
+              <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                  <h1 class="fw-light">Movies</h1>
+                
+                </div>
+              </div>
+            </section>
+
+            <% if (movies.length > 0) { %>
+
+              <div class="album py-5 bg-light">
+                <div class="container">
+            
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+  
+                    <% for (var i=0; i < movies.length; i++) { %>
+                    <div class="col">
+                      <div class="card shadow-sm">
+                        <img src="https://image.tmdb.org/t/p/w500<%=movies[i].posterPath%>" width="100%" height="225" role="img">
+            
+                        <div class="card-body">
+                          <p class="card-text"></p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                              <a href="/movies/movie?username=<%=user%>&movie=<%=movies[i].name%>" class="btn btn-sm btn-outline-secondary">View</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+
+            <% } else { %>
+              <section class="py-2 text-center container">
+                <div class="row py-lg-5">
+                  <div class="col-lg-6 col-md-8 mx-auto">
+                    <h4 class="fw-light" style="color:white;">No results found.</h1>
+                  </div>
+                </div>
+              </section>
+            <% } %>
+          
+            
+</body>
+
+</html>
